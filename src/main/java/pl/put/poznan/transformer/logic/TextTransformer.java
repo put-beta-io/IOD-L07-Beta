@@ -1,15 +1,10 @@
 package pl.put.poznan.transformer.logic;
 
-import javax.sql.rowset.serial.SerialStruct;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.Callable;
-import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * This is just an example to show that the logic should be outside the REST service.
