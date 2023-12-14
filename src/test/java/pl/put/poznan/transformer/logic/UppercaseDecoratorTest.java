@@ -35,4 +35,11 @@ class UppercaseDecoratorTest {
 
         assertEquals("A B C D E F G", got);
     }
+
+    @Test
+    void testDecorateUppercaseEmptyString() {
+        String got = transformer.transform("");
+
+        assertEquals("", got);
+    }
 }
