@@ -38,6 +38,11 @@ public class CapitalizeDecorator extends BasicTextTransformer {
         var split = List.of(text.split(" "));
         var words = new ArrayList<String>();
         for (String word : split) {
+            // when empty string is split, it creates an empty string in an array
+            // resulting in an empty word first letter access to be capitalized
+            if (word.length() == 0) {
+                continue;
+            }
             String capitalize = word.substring(0, 1).toUpperCase() + word.substring(1);
             words.add(capitalize);
         }
