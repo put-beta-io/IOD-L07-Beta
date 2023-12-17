@@ -57,6 +57,9 @@ public class TextTransformerBuilder {
                 case "capitalize":
                     textTransformer = new CapitalizeDecorator(textTransformer);
                     break;
+                case "abbreviation":
+                    textTransformer = new AbbreviationDecorator(textTransformer);
+                    break;
             }
         }
         return textTransformer;
