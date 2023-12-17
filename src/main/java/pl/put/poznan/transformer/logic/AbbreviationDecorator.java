@@ -5,18 +5,36 @@ import java.util.ArrayList;
 import java.io.File;
 import java.util.Scanner;
 
+/**
+ * Class for make abbreviations from words.
+ * It extends BasicTextTransformer and implements TextTransformer.
+ */
 public class AbbreviationDecorator extends BasicTextTransformer {
     private final TextTransformer transformer;
 
+    /**
+     * Constructor for Abbreviation.
+     * @param wrappedTransformer Text transformer object to be decorated.
+     */
     public AbbreviationDecorator(TextTransformer wrappedTransformer) {
         this.transformer = wrappedTransformer;
     }
 
+    /**
+     * Method for transforming text.
+     * @param text Text to be transformed
+     * @return Text after changes with abbreviations.
+     */
     @Override
     public String transform(String text) {
         return abbreviation(transformer.transform(text));
     }
 
+    /**
+     * Function for read full word and abbreviations from file.
+     * @param abbreviations Array with abbreviations.
+     * @param fullWords Array with not abbreviated word.
+     */
     public void readFile(ArrayList<String> abbreviations, ArrayList<String> fullWords) {
         String[] wordsArray;
         try {
@@ -34,6 +52,11 @@ public class AbbreviationDecorator extends BasicTextTransformer {
         }
     }
 
+    /**
+     * Method for abbreviate words found in input text.
+     * @param text Text to be transformed.
+     * @return Text with abbreviations if exists.
+     */
     public String abbreviation(String text) {
         String[] split = text.split(" ");
         int splitLength = split.length;
@@ -102,6 +125,13 @@ public class AbbreviationDecorator extends BasicTextTransformer {
         return String.join(" ", output);
     }
 
+    /**
+     * Method for change letter to capitalize if input text had them capitalized.
+     * @param abbreviations Array with abbreviations read from file.
+     * @param iteration Index where we found abbreviate words.
+     * @param toCapitalize Array with indexes of words started with capital letter.
+     * @return Abbreviated string with optionally big letters.
+     */
     private static String getString(ArrayList<String> abbreviations, int iteration, ArrayList<Integer> toCapitalize) {
         StringBuilder out = new StringBuilder();
         int k = 0;
