@@ -1,0 +1,18 @@
+np.	na przykład
+itd.	i tak dalej
+br.	bieżącego roku
+cdn.	ciąg dalszy nastąpi
+godz.	godzina
+itp.	i tym podobne
+jw.	jak wyżej
+m.in	między innymi
+min	minuta
+nr	numer
+pt.	pod tytułem
+r.	roku
+śp.	świętej pamięci
+św.	święty
+tj.	to jest
+tzn.	to znaczy
+tzw.	tak zwany
+ul.	ulica
