@@ -74,8 +74,10 @@ public class NumbersToTextDecorator extends BasicTextTransformer {
 
                 if (lengthOfNumber == 2 && !foundNumber) {
                     transformedText.add(numbersBelowHundred(split[i]));
-                } else {
-                    transformedText.add(findNumber(split[i], lengthOfNumber));
+                } else if (lengthOfNumber == 3 && !foundNumber) {
+                    transformedText.add(numberBelowThousand(split[i]));
+                }else{
+                    transformedText.add(findNumber(split[i],lengthOfNumber));
                 }
             } else {
                 transformedText.add(split[i]);
@@ -104,17 +106,22 @@ public class NumbersToTextDecorator extends BasicTextTransformer {
             int firstInNumber = Integer.parseInt(textAsNumber);
             String firstInText = textAsNumber.substring(0, 1);
             String secondInText = textAsNumber.substring(1, 2);
-            if (11 < firstInNumber && firstInNumber < 20) {
-                numberToText.add(findNumberTextName(firstInText) + "aście");
+            boolean noAdditionalDigit = false;
+
+            if (firstInText.equals("0")){
+                noAdditionalDigit = true;
                 numberToText.add(findNumberTextName(secondInText));
+            } else if (11 < firstInNumber && firstInNumber < 20) {
+                numberToText.add(findNumberTextName(secondInText) + "naście");
+                noAdditionalDigit = true;
             } else if (19 < firstInNumber && firstInNumber < 30) {
                 numberToText.add(findNumberTextName(firstInText) + "dzieścia");
-                numberToText.add(findNumberTextName(secondInText));
             } else if (29 < firstInNumber && firstInNumber < 50) {
                 numberToText.add(findNumberTextName(firstInText) + "dzieści");
-                numberToText.add(findNumberTextName(secondInText));
             } else if (49 < firstInNumber && firstInNumber < 100) {
                 numberToText.add(findNumberTextName(firstInText) + "dziesiąt");
+            }
+            if(!secondInText.equals("0") && !noAdditionalDigit){
                 numberToText.add(findNumberTextName(secondInText));
             }
         }
@@ -138,22 +145,26 @@ public class NumbersToTextDecorator extends BasicTextTransformer {
         int firstInNumber = Integer.parseInt(textAsNumber.substring(0, 1));
         String firstInTextHundred = textAsNumber.substring(0, 1);
         String restOfText = textAsNumber.substring(1, 3);
-        if (firstInTextHundred.equals("0")) {
-            numberToText.add(numbersBelowHundred(restOfText));
-        }
-        if (firstInTextHundred.equals("1")) {
-            numberToText.add("sto " + numbersBelowHundred(restOfText));
-        } else if (firstInTextHundred.equals("2")) {
-            numberToText.add("dwieście " + numbersBelowHundred(restOfText));
-        }
-        if (firstInNumber == 3 || firstInNumber == 4) {
-            numberToText.add(findNumberTextName(firstInTextHundred) + "sta");
-            numberToText.add(numbersBelowHundred(restOfText));
-        }
-        if (firstInNumber > 5) {
+        if (restOfText.equals("00")){
             numberToText.add(findNumberTextName(firstInTextHundred) + "set");
-            numberToText.add(numbersBelowHundred(restOfText));
-
+        }else {
+            if (firstInTextHundred.equals("0")) {
+                numberToText.add(numbersBelowHundred(restOfText));
+            }
+            if (firstInTextHundred.equals("1")) {
+                numberToText.add("sto " + numbersBelowHundred(restOfText));
+            }
+            if (firstInTextHundred.equals("2")) {
+                numberToText.add("dwieście " + numbersBelowHundred(restOfText));
+            }
+            if (firstInNumber == 3 || firstInNumber == 4) {
+                numberToText.add(findNumberTextName(firstInTextHundred) + "sta");
+                numberToText.add(numbersBelowHundred(restOfText));
+            }
+            if (firstInNumber >= 5) {
+                numberToText.add(findNumberTextName(firstInTextHundred) + "set");
+                numberToText.add(numbersBelowHundred(restOfText));
+            }
         }
         return String.join(" ", numberToText);
     }
@@ -170,10 +181,10 @@ public class NumbersToTextDecorator extends BasicTextTransformer {
                 numberToText.add(numberBelowThousand(restOfValue));
             } else {
                 if (firstInNumberThousand < 5) {
-                    numberToText.add(findNumberTextName(firstInTextThousand) + " tysiace ");
+                    numberToText.add(findNumberTextName(firstInTextThousand) + " tysiace");
                     numberToText.add(numberBelowThousand(restOfValue));
                 } else {
-                    numberToText.add(findNumberTextName(firstInTextThousand) + " tysięcy ");
+                    numberToText.add(findNumberTextName(firstInTextThousand) + " tysięcy");
                     numberToText.add(numberBelowThousand(restOfValue));
                 }
             }
@@ -181,7 +192,12 @@ public class NumbersToTextDecorator extends BasicTextTransformer {
         if (length == 5) {
             String firstTwo = textAsNumber.substring(0, 2);
             restOfValue = textAsNumber.substring(2,5);
-            numberToText.add(numbersBelowHundred(firstTwo));
+            String ending = " tysięcy";
+            int secondValue = Integer.parseInt(textAsNumber.substring(1,2));
+            if (secondValue < 5 && secondValue != 0){
+                ending = " tysiące";
+            }
+            numberToText.add(numbersBelowHundred(firstTwo) + ending);
             numberToText.add(numberBelowThousand(restOfValue));
         }
         return String.join(" ", numberToText);

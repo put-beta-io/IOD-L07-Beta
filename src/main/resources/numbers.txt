@@ -8,6 +8,7 @@
 8	osiem
 9	dziewięć
 10	dziesięć
+11	jedenaście
 14	czternaście
 15	piętnaście
 16 	szesnaście
