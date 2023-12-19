@@ -26,7 +26,7 @@ public class NumbersToTextDecorator extends BasicTextTransformer {
             return false;
         }
         try {
-            double d = Integer.parseInt(strNum);
+            double d = Double.parseDouble(strNum);
         } catch (NumberFormatException nfe) {
             return false;
         }
@@ -76,7 +76,7 @@ public class NumbersToTextDecorator extends BasicTextTransformer {
                     transformedText.add(numbersBelowHundred(split[i]));
                 } else if (lengthOfNumber == 3 && !foundNumber) {
                     transformedText.add(numberBelowThousand(split[i]));
-                }else{
+                }else if (lengthOfNumber > 3 && !foundNumber){
                     transformedText.add(findNumber(split[i],lengthOfNumber));
                 }
             } else {
@@ -84,7 +84,6 @@ public class NumbersToTextDecorator extends BasicTextTransformer {
             }
             i++;
         }
-
         return String.join(" ", transformedText);
     }
 
@@ -117,7 +116,12 @@ public class NumbersToTextDecorator extends BasicTextTransformer {
             } else if (19 < firstInNumber && firstInNumber < 30) {
                 numberToText.add(findNumberTextName(firstInText) + "dzieścia");
             } else if (29 < firstInNumber && firstInNumber < 50) {
-                numberToText.add(findNumberTextName(firstInText) + "dzieści");
+                if (firstInText.equals("4")){
+                    numberToText.add("czterdzieści");
+                }else{
+                    numberToText.add(findNumberTextName(firstInText) + "dzieści");
+                }
+
             } else if (49 < firstInNumber && firstInNumber < 100) {
                 numberToText.add(findNumberTextName(firstInText) + "dziesiąt");
             }
@@ -181,7 +185,7 @@ public class NumbersToTextDecorator extends BasicTextTransformer {
                 numberToText.add(numberBelowThousand(restOfValue));
             } else {
                 if (firstInNumberThousand < 5) {
-                    numberToText.add(findNumberTextName(firstInTextThousand) + " tysiace");
+                    numberToText.add(findNumberTextName(firstInTextThousand) + " tysiące");
                     numberToText.add(numberBelowThousand(restOfValue));
                 } else {
                     numberToText.add(findNumberTextName(firstInTextThousand) + " tysięcy");
