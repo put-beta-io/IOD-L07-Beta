@@ -10,7 +10,7 @@ class AbbreviationDecoratorTest {
     @BeforeEach
     void setUp() {
         TextTransformerBuilder builder = new TextTransformerBuilder();
-        builder.addTransformation("abbreviation");
+        builder.addTransformation("abbreviate");
         transformer = builder.getTransformer();
     }
 
@@ -29,8 +29,8 @@ class AbbreviationDecoratorTest {
 
     @Test
     void testAbbreviationEmpty(){
-        String got = transformer.transform(" ");
-        assertEquals(" ",got);
+        String got = transformer.transform("");
+        assertEquals("",got);
     }
 
     @Test
