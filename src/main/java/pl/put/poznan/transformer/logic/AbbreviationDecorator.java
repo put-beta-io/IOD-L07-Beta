@@ -11,12 +11,16 @@ import java.util.Scanner;
  */
 public class AbbreviationDecorator extends BasicTextTransformer {
     private final TextTransformer transformer;
+    private final ArrayList<String> abbreviations = new ArrayList<>();
+    private final ArrayList<String> fullWords = new ArrayList<>();
 
     /**
      * Constructor for Abbreviation.
+     * This constructor load file with abbreviations and meaning.
      * @param wrappedTransformer Text transformer object to be decorated.
      */
     public AbbreviationDecorator(TextTransformer wrappedTransformer) {
+        readFile(abbreviations, fullWords);
         this.transformer = wrappedTransformer;
     }
 
@@ -59,70 +63,63 @@ public class AbbreviationDecorator extends BasicTextTransformer {
      */
     public String abbreviation(String text) {
         String[] split = text.split(" ");
-        int splitLength = split.length;
-        var abbreviations = new ArrayList<String>();
-        var fullWords = new ArrayList<String>();
+        int totalWordsCount = split.length;
         var toCapitalize = new ArrayList<Integer>();
 
-        readFile(abbreviations, fullWords);
-
-        var output = new ArrayList<String>();
-        int isAbbreviated = 0;
+        var sentenceAfterAllChanges = new ArrayList<String>();
+        boolean isAbbreviated = false;
         int i = 0;
-        int size = 0;
-        int iteration;
-        int capitalize = 0;
-        while (i < splitLength) {
-            iteration = 0;
+        int abbreviateWordsCount = 0;
+        int indexOfAbbreviateWord;
+        boolean capitalize = false;
+        while (i < totalWordsCount) {
+            if(split[i].length() == 0){
+                i++;
+                continue;
+            }
+            indexOfAbbreviateWord = 0;
             for (String word : fullWords) {
-                if (word.length() == 0) {
-                    continue;
-                }
                 toCapitalize.clear();
-                String[] splitWords = word.split(" ");
-                size = splitWords.length;
+                String[] fullWordsAbbreviate = word.split(" ");
+                abbreviateWordsCount = fullWordsAbbreviate.length;
                 int j = i;
                 int k = 0;
-                isAbbreviated = 0;
-                capitalize = 0;
-                while (j < splitLength && k < size && j < i + size) {
+                isAbbreviated = false;
+                capitalize = false;
+                while (j < totalWordsCount && k < abbreviateWordsCount && j < i + abbreviateWordsCount) {
                     char firstLetter = split[j].charAt(0);
                     if (Character.isUpperCase(firstLetter)) {
-                        capitalize = 1;
+                        capitalize = true;
                         toCapitalize.add(k);
                     }
-                    if (split[j].toLowerCase().equals(splitWords[k])) {
-                        isAbbreviated = 1;
+                    if (split[j].toLowerCase().equals(fullWordsAbbreviate[k])) {
+                        isAbbreviated = true;
                     } else {
-                        isAbbreviated = 0;
+                        isAbbreviated = false;
                         break;
                     }
                     j++;
                     k++;
                 }
-                if (isAbbreviated == 1) {
+                if (isAbbreviated) {
                     break;
                 }
-                iteration++;
+                indexOfAbbreviateWord++;
             }
-            if (isAbbreviated == 0) {
-                output.add(split[i]);
+            if (!isAbbreviated) {
+                sentenceAfterAllChanges.add(split[i]);
                 i++;
             } else {
-                if (capitalize == 1) {
-                    String out = getString(abbreviations, iteration, toCapitalize);
-                    output.add(out);
+                if (capitalize) {
+                    String out = getString(abbreviations, indexOfAbbreviateWord, toCapitalize);
+                    sentenceAfterAllChanges.add(out);
                 } else {
-                    output.add(abbreviations.get(iteration));
+                    sentenceAfterAllChanges.add(abbreviations.get(indexOfAbbreviateWord));
                 }
-                i += size;
+                i += abbreviateWordsCount;
             }
         }
-        // When output array is empty add empty string
-        if (output.size() == 0) {
-            output.add(" ");
-        }
-        return String.join(" ", output);
+        return String.join(" ", sentenceAfterAllChanges);
     }
 
     /**
