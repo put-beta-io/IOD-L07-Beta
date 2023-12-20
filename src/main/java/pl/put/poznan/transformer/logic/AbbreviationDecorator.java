@@ -1,5 +1,8 @@
 package pl.put.poznan.transformer.logic;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.io.File;
@@ -13,10 +16,12 @@ public class AbbreviationDecorator extends BasicTextTransformer {
     private final TextTransformer transformer;
     private final ArrayList<String> abbreviations = new ArrayList<>();
     private final ArrayList<String> fullWords = new ArrayList<>();
+    private static final Logger logger = LoggerFactory.getLogger(AbbreviationDecorator.class);
 
     /**
      * Constructor for Abbreviation.
      * This constructor load file with abbreviations and meaning.
+     *
      * @param wrappedTransformer Text transformer object to be decorated.
      */
     public AbbreviationDecorator(TextTransformer wrappedTransformer) {
@@ -26,6 +31,7 @@ public class AbbreviationDecorator extends BasicTextTransformer {
 
     /**
      * Method for transforming text.
+     *
      * @param text Text to be transformed
      * @return Text after changes with abbreviations.
      */
@@ -36,8 +42,9 @@ public class AbbreviationDecorator extends BasicTextTransformer {
 
     /**
      * Function for read full word and abbreviations from file.
+     *
      * @param abbreviations Array with abbreviations.
-     * @param fullWords Array with not abbreviated word.
+     * @param fullWords     Array with not abbreviated word.
      */
     public void readFile(ArrayList<String> abbreviations, ArrayList<String> fullWords) {
         String[] wordsArray;
@@ -58,10 +65,12 @@ public class AbbreviationDecorator extends BasicTextTransformer {
 
     /**
      * Method for abbreviate words found in input text.
+     *
      * @param text Text to be transformed.
      * @return Text with abbreviations if exists.
      */
     public String abbreviation(String text) {
+        logger.debug("Doing abbreviation before=" + text + " ");
         String[] split = text.split(" ");
         int totalWordsCount = split.length;
         var toCapitalize = new ArrayList<Integer>();
@@ -73,7 +82,7 @@ public class AbbreviationDecorator extends BasicTextTransformer {
         int indexOfAbbreviateWord;
         boolean capitalize = false;
         while (i < totalWordsCount) {
-            if(split[i].length() == 0){
+            if (split[i].length() == 0) {
                 i++;
                 continue;
             }
@@ -119,14 +128,18 @@ public class AbbreviationDecorator extends BasicTextTransformer {
                 i += abbreviateWordsCount;
             }
         }
-        return String.join(" ", sentenceAfterAllChanges);
+        String output = String.join(" ", sentenceAfterAllChanges);
+        logger.debug("Doing abbreviation after=" + output);
+
+        return output;
     }
 
     /**
      * Method for change letter to capitalize if input text had them capitalized.
+     *
      * @param abbreviations Array with abbreviations read from file.
-     * @param iteration Index where we found abbreviate words.
-     * @param toCapitalize Array with indexes of words started with capital letter.
+     * @param iteration     Index where we found abbreviate words.
+     * @param toCapitalize  Array with indexes of words started with capital letter.
      * @return Abbreviated string with optionally big letters.
      */
     private static String getString(ArrayList<String> abbreviations, int iteration, ArrayList<Integer> toCapitalize) {
