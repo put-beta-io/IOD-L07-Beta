@@ -6,21 +6,40 @@ import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Scanner;
 
+/**
+ * Class for change numbers to text.
+ * It extends BasicTextTransformer and implements TextTransformer.
+ */
 public class NumbersToTextDecorator extends BasicTextTransformer {
     private final TextTransformer transformer;
     private final ArrayList<String> numbers = new ArrayList<>();
     private final ArrayList<String> textNumbers = new ArrayList<>();
 
+    /**
+     * Constructor for changing numbers to text.
+     * This constructor load file with basic numbers or with specific names.
+     * @param wrappedTransformer Text transformer object to be decorated.
+     */
     public NumbersToTextDecorator(TextTransformer wrappedTransformer) {
         readFile(numbers, textNumbers);
         this.transformer = wrappedTransformer;
     }
 
+    /**
+     * Method for transforming text.
+     * @param text Text to be transformed
+     * @return Text after changing.
+     */
     @Override
     public String transform(String text) {
         return numbersToText(transformer.transform(text));
     }
 
+    /**
+     * Method check if text can be converted to Integer.
+     * @param strNum Specific word from sentence.
+     * @return True or False depends if value can be converted or not.
+     */
     public static boolean isNumeric(String strNum) {
         if (strNum == null) {
             return false;
@@ -33,6 +52,11 @@ public class NumbersToTextDecorator extends BasicTextTransformer {
         return true;
     }
 
+    /**
+     * Function for read numbers and their specific names.
+     * @param numbers Array with numbers.
+     * @param textNumbers Array with names of specific number.
+     */
     public void readFile(ArrayList<String> numbers, ArrayList<String> textNumbers) {
         String[] line;
         try {
@@ -50,6 +74,11 @@ public class NumbersToTextDecorator extends BasicTextTransformer {
         }
     }
 
+    /**
+     * Main method that get text, split it and change numbers to text.
+     * @param text Text to be transformed.
+     * @return Text after change.
+     */
     public String numbersToText(String text) {
         String[] split = text.split(" ");
         int totalWordsCount = split.length;
@@ -122,6 +151,11 @@ public class NumbersToTextDecorator extends BasicTextTransformer {
         return String.join(" ", transformedText);
     }
 
+    /**
+     * Method that takes numbers in range 10-99 and convert them to words
+     * @param textAsNumber String text of number length 2.
+     * @return Number converted to name in words.
+     */
     public String numbersBelowHundred(String textAsNumber) {
         boolean foundNumber = false;
         var numberToText = new ArrayList<String>();
@@ -167,6 +201,11 @@ public class NumbersToTextDecorator extends BasicTextTransformer {
         return String.join(" ", numberToText);
     }
 
+    /**
+     * Method that look for specific number in array that contains info from file.
+     * @param number String of number.
+     * @return Full name of number in words.
+     */
     public String findNumberTextName(String number) {
         int j = 0;
         while (j < numbers.size()) {
@@ -178,6 +217,11 @@ public class NumbersToTextDecorator extends BasicTextTransformer {
         return textNumbers.get(j);
     }
 
+    /**
+     * Method that takes numbers in range 100-999 and convert them to words
+     * @param textAsNumber String text of number of length 3.
+     * @return Number converted to name in words.
+     */
     public String numberBelowThousand(String textAsNumber) {
         var numberToText = new ArrayList<String>();
 
@@ -208,6 +252,12 @@ public class NumbersToTextDecorator extends BasicTextTransformer {
         return String.join(" ", numberToText);
     }
 
+    /**
+     * Method that converts number in range 1000-99999.
+     * @param textAsNumber String of number.
+     * @param length Length of provided string.
+     * @return Number converted to name in words.
+     */
     public String findNumber(String textAsNumber, int length) {
         var numberToText = new ArrayList<String>();
         String restOfValue;
