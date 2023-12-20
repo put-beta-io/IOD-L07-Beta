@@ -1,5 +1,8 @@
 package pl.put.poznan.transformer.logic;
 
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
+
 import java.util.ArrayList;
 
 /**
@@ -14,6 +17,7 @@ public class TextTransformerBuilder {
      * List of transformations to be added to the TextTransformer object.
      */
     private final ArrayList<String> transformations;
+    private static final Logger logger = LoggerFactory.getLogger(TextTransformerBuilder.class);
 
     /**
      * Default constructor.
@@ -49,21 +53,27 @@ public class TextTransformerBuilder {
         for (var transform : transformations) {
             switch (transform) {
                 case "upper":
+                    logger.info("Upper transformation");
                     textTransformer = new UppercaseDecorator(textTransformer);
                     break;
                 case "lower":
+                    logger.info("Lower transformation");
                     textTransformer = new LowercaseDecorator(textTransformer);
                     break;
                 case "capitalize":
+                    logger.info("Capitalize transformation");
                     textTransformer = new CapitalizeDecorator(textTransformer);
                     break;
                 case "abbreviate":
+                    logger.info("Abbreviate transformation");
                     textTransformer = new AbbreviationDecorator(textTransformer);
                     break;
                 case "numbers":
+                    logger.info("Numbers to text transformation");
                     textTransformer = new NumbersToTextDecorator(textTransformer);
                     break;
                 case "reverse":
+                    logger.info("Reverse transformation");
                     textTransformer = new ReverseDecorator(textTransformer);
                     break;
             }

@@ -1,5 +1,8 @@
 package pl.put.poznan.transformer.logic;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -14,10 +17,12 @@ public class NumbersToTextDecorator extends BasicTextTransformer {
     private final TextTransformer transformer;
     private final ArrayList<String> numbers = new ArrayList<>();
     private final ArrayList<String> textNumbers = new ArrayList<>();
+    private static final Logger logger = LoggerFactory.getLogger(NumbersToTextDecorator.class);
 
     /**
      * Constructor for changing numbers to text.
      * This constructor load file with basic numbers or with specific names.
+     *
      * @param wrappedTransformer Text transformer object to be decorated.
      */
     public NumbersToTextDecorator(TextTransformer wrappedTransformer) {
@@ -27,6 +32,7 @@ public class NumbersToTextDecorator extends BasicTextTransformer {
 
     /**
      * Method for transforming text.
+     *
      * @param text Text to be transformed
      * @return Text after changing.
      */
@@ -37,6 +43,7 @@ public class NumbersToTextDecorator extends BasicTextTransformer {
 
     /**
      * Method check if text can be converted to Integer.
+     *
      * @param strNum Specific word from sentence.
      * @return True or False depends if value can be converted or not.
      */
@@ -54,7 +61,8 @@ public class NumbersToTextDecorator extends BasicTextTransformer {
 
     /**
      * Function for read numbers and their specific names.
-     * @param numbers Array with numbers.
+     *
+     * @param numbers     Array with numbers.
      * @param textNumbers Array with names of specific number.
      */
     public void readFile(ArrayList<String> numbers, ArrayList<String> textNumbers) {
@@ -76,10 +84,12 @@ public class NumbersToTextDecorator extends BasicTextTransformer {
 
     /**
      * Main method that get text, split it and change numbers to text.
+     *
      * @param text Text to be transformed.
      * @return Text after change.
      */
     public String numbersToText(String text) {
+        logger.debug("Doing number to text before" + text);
         String[] split = text.split(" ");
         int totalWordsCount = split.length;
 
@@ -90,7 +100,7 @@ public class NumbersToTextDecorator extends BasicTextTransformer {
         boolean isDouble;
         String[] numberWithDecimal = new String[0];
         while (i < totalWordsCount) {
-            if(split[i].length() == 0){
+            if (split[i].length() == 0) {
                 i++;
                 continue;
             }
@@ -104,9 +114,9 @@ public class NumbersToTextDecorator extends BasicTextTransformer {
                     split[i] = numberWithDecimal[0];
                 }
             }
-            if (Integer.parseInt(split[i]) == 0){
+            if (Integer.parseInt(split[i]) == 0) {
                 transformedText.add("zero");
-            }else{
+            } else {
                 // Change value to name
                 if (isNumeric(split[i])) {
                     foundNumber = false;
@@ -139,20 +149,23 @@ public class NumbersToTextDecorator extends BasicTextTransformer {
                 if (numberWithDecimal[1].length() == 1) {
                     inputString += "0";
                 }
-                if (Integer.parseInt(numberWithDecimal[1].substring(1,2)) < 5 && !numberWithDecimal[1].substring(1, 2).equals("0")) {
+                if (Integer.parseInt(numberWithDecimal[1].substring(1, 2)) < 5 && !numberWithDecimal[1].substring(1, 2).equals("0")) {
                     transformedText.add("i " + numbersBelowHundred(inputString) + " setne");
-                }else {
+                } else {
                     transformedText.add("i " + numbersBelowHundred(inputString) + " setnych");
                 }
 
             }
             i++;
         }
-        return String.join(" ", transformedText);
+        String output = String.join(" ", transformedText);
+        logger.debug("Doing number to text after=" + output);
+        return output;
     }
 
     /**
      * Method that takes numbers in range 10-99 and convert them to words
+     *
      * @param textAsNumber String text of number length 2.
      * @return Number converted to name in words.
      */
@@ -203,6 +216,7 @@ public class NumbersToTextDecorator extends BasicTextTransformer {
 
     /**
      * Method that look for specific number in array that contains info from file.
+     *
      * @param number String of number.
      * @return Full name of number in words.
      */
@@ -219,6 +233,7 @@ public class NumbersToTextDecorator extends BasicTextTransformer {
 
     /**
      * Method that takes numbers in range 100-999 and convert them to words
+     *
      * @param textAsNumber String text of number of length 3.
      * @return Number converted to name in words.
      */
@@ -254,8 +269,9 @@ public class NumbersToTextDecorator extends BasicTextTransformer {
 
     /**
      * Method that converts number in range 1000-99999.
+     *
      * @param textAsNumber String of number.
-     * @param length Length of provided string.
+     * @param length       Length of provided string.
      * @return Number converted to name in words.
      */
     public String findNumber(String textAsNumber, int length) {
@@ -265,9 +281,9 @@ public class NumbersToTextDecorator extends BasicTextTransformer {
             int firstInNumberThousand = Integer.parseInt(textAsNumber.substring(0, 1));
             String firstInTextThousand = textAsNumber.substring(0, 1);
             restOfValue = textAsNumber.substring(1, 4);
-            if (firstInTextThousand.equals("0")){
+            if (firstInTextThousand.equals("0")) {
                 numberToText.add(numberBelowThousand(restOfValue));
-            }else if (firstInNumberThousand == 1) {
+            } else if (firstInNumberThousand == 1) {
                 numberToText.add("tysiąc");
                 numberToText.add(numberBelowThousand(restOfValue));
             } else {

@@ -1,12 +1,15 @@
 package pl.put.poznan.transformer.logic;
 
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
+
 /**
  * Class for transforming text to uppercase.
  * It extends BasicTextTransformer and implements TextTransformer.
  */
 public class UppercaseDecorator extends BasicTextTransformer {
     private final TextTransformer transformer;
-
+    private static final Logger logger = LoggerFactory.getLogger(UppercaseDecorator.class);
     /**
      * Constructor for UppercaseDecorator.
      * @param wrappedTransformer TextTransformer object to be decorated.
@@ -22,6 +25,9 @@ public class UppercaseDecorator extends BasicTextTransformer {
      */
     @Override
     public String transform(String text) {
-        return transformer.transform(text).toUpperCase();
+        logger.debug("Doing uppercase before="+text);
+        String output = transformer.transform(text).toUpperCase();
+        logger.debug("Doing uppercase after="+text);
+        return output;
     }
 }
