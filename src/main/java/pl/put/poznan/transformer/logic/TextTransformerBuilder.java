@@ -63,6 +63,9 @@ public class TextTransformerBuilder {
                 case "numbers":
                     textTransformer = new NumbersToTextDecorator(textTransformer);
                     break;
+                case "reverse":
+                    textTransformer = new ReverseDecorator(textTransformer);
+                    break;
             }
         }
         return textTransformer;
