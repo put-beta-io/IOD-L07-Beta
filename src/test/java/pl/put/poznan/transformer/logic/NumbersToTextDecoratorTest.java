@@ -48,4 +48,18 @@ class NumbersToTextDecoratorTest {
         String got = transformer.transform("");
         assertEquals("",got);
     }
+
+    @Test
+    void testNumbersToTextDecimal(){
+        String got = transformer.transform("1,23 9,83");
+        String expect = "jeden i dwadzieścia trzy setne dziewięć i osiemdziesiąt trzy setne";
+        assertEquals(expect,got);
+    }
+
+    @Test
+    void testNumberToTextZeros(){
+        String got = transformer.transform("0 00 000 01 0,15");
+        String expect = "zero zero zero jeden zero i piętnaście setnych";
+        assertEquals(expect,got);
+    }
 }
