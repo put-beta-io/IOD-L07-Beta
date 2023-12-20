@@ -60,6 +60,9 @@ public class TextTransformerBuilder {
                 case "abbreviate":
                     textTransformer = new AbbreviationDecorator(textTransformer);
                     break;
+                case "numbers":
+                    textTransformer = new NumbersToTextDecorator(textTransformer);
+                    break;
             }
         }
         return textTransformer;
