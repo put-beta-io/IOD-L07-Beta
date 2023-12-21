@@ -44,22 +44,29 @@ class NumbersToTextDecoratorTest {
     }
 
     @Test
-    void testNumbersToTextEmpty(){
+    void testNumbersToTextEmpty() {
         String got = transformer.transform("");
-        assertEquals("",got);
+        assertEquals("", got);
     }
 
     @Test
-    void testNumbersToTextDecimal(){
+    void testNumbersToTextDecimal() {
         String got = transformer.transform("1,23 9,83");
         String expect = "jeden i dwadzieścia trzy setne dziewięć i osiemdziesiąt trzy setne";
-        assertEquals(expect,got);
+        assertEquals(expect, got);
     }
 
     @Test
-    void testNumberToTextZeros(){
+    void testNumberToTextZeros() {
         String got = transformer.transform("0 00 000 01 0,15");
         String expect = "zero zero zero jeden zero i piętnaście setnych";
-        assertEquals(expect,got);
+        assertEquals(expect, got);
+    }
+
+    @Test
+    void testNumberToTextSentence() {
+        String got = transformer.transform("Pies burek waga 21,37 jest teraz, pusty 0 i niepełny 2137");
+        String expect = "Pies burek waga dwadzieścia jeden i trzydzieści siedem setnych jest teraz, pusty zero i niepełny dwa tysiące sto trzydzieści siedem";
+        assertEquals(expect, got);
     }
 }
