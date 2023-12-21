@@ -24,6 +24,10 @@ Jako użytkownik mogę zmianać wielkości liter – zestaw trzech transformacji
 | Jako użytkownik mogę przekształcać tekst do formatu wspieranego przez Latex (znaki specjalne) -> (John Smith & Sons -> John Smith \& Sons)	| 2 | 	6 |	0,5 |
 | Jako użytkownik mogę eliminować powtarzające się wyrazy w bezpośrednim sąsiedztwie (Wyślij do do mnie wiadomość -> Wyślij do mnie wiadomość)	| 1 | 	8 | 	1 |
 | Jako użytkownik mogę skorzystać z aplikacji za pomocą interfejsu użytkownika	| 	| 16 | | 
+| Jako użytkownik mogę usunąć wszystkie spacje (Ala ma kota -> Alamakota)	| 	|  | | 
+| Jako użytkownik mogę usunąć znaki interpunktycje (Ala ma kota, a kot ma Alę. -> Ala ma kota a kot ma Alę)	| 	|  | | 
+| Jako użytkownik mogę rozdzielić tekst tak, by każde zdanie zaczynało się od nowej linii	| 	|  | | 
+| Jako użytkownik mogę zastąpić wulgaryzmy gwiazdkami z tekstu, zakres obsługiwanych wulgaryzmów do negocjacji (Ty czereśniaku! -> Ty ***********!) | 	|  | | 
 
 # Backlog sprintu
 
