@@ -89,7 +89,7 @@ public class NumbersToTextDecorator extends BasicTextTransformer {
      * @return Text after change.
      */
     public String numbersToText(String text) {
-        logger.debug("Doing number to text before" + text);
+        logger.debug("Doing number to text before=" + text);
         String[] split = text.split(" ");
         int totalWordsCount = split.length;
 
@@ -108,17 +108,24 @@ public class NumbersToTextDecorator extends BasicTextTransformer {
             isDouble = split[i].contains(",");
             if (isDouble) {
                 numberWithDecimal = split[i].split(",");
-                boolean intValue = isNumeric(numberWithDecimal[0]);
-                boolean decimalValue = isNumeric(numberWithDecimal[1]);
-                if (intValue && decimalValue) {
-                    split[i] = numberWithDecimal[0];
+                if (numberWithDecimal.length != 1) {
+                    if (numberWithDecimal[0].length() != 0 && numberWithDecimal[1].length() != 0) {
+                        boolean intValue = isNumeric(numberWithDecimal[0]);
+                        boolean decimalValue = isNumeric(numberWithDecimal[1]);
+                        if (intValue && decimalValue) {
+                            split[i] = numberWithDecimal[0];
+                        }
+                    }
+                } else {
+                    isDouble = false;
                 }
             }
-            if (Integer.parseInt(split[i]) == 0) {
-                transformedText.add("zero");
-            } else {
-                // Change value to name
-                if (isNumeric(split[i])) {
+
+            // Change value to name
+            if (isNumeric(split[i])) {
+                if (Integer.parseInt(split[i]) == 0) {
+                    transformedText.add("zero");
+                } else {
                     foundNumber = false;
                     lengthOfNumber = split[i].length();
                     int j = 0;
@@ -138,11 +145,10 @@ public class NumbersToTextDecorator extends BasicTextTransformer {
                     } else if (lengthOfNumber > 3 && !foundNumber) {
                         transformedText.add(findNumber(split[i], lengthOfNumber));
                     }
-                } else {
-                    transformedText.add(split[i]);
                 }
+            } else {
+                transformedText.add(split[i]);
             }
-
             // Work with decimal value
             if (isDouble) {
                 String inputString = numberWithDecimal[1];
@@ -154,7 +160,6 @@ public class NumbersToTextDecorator extends BasicTextTransformer {
                 } else {
                     transformedText.add("i " + numbersBelowHundred(inputString) + " setnych");
                 }
-
             }
             i++;
         }
