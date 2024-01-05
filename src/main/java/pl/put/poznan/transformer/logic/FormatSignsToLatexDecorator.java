@@ -1,5 +1,8 @@
 package pl.put.poznan.transformer.logic;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -13,6 +16,7 @@ public class FormatSignsToLatexDecorator extends BasicTextTransformer {
     private final TextTransformer transformer;
     private final ArrayList<String> normalSign = new ArrayList<>();
     private final ArrayList<String> latexSign = new ArrayList<>();
+    private static final Logger logger = LoggerFactory.getLogger(FormatSignsToLatexDecorator.class);
 
     /**
      * Constructor for FormatSignsToLatexDecorator
@@ -33,7 +37,10 @@ public class FormatSignsToLatexDecorator extends BasicTextTransformer {
      */
     @Override
     public String transform(String text) {
-        return formatToLatex(transformer.transform(text));
+        logger.debug("Doing formatting signs before=" + text + " ");
+        String output = formatToLatex(transformer.transform(text));
+        logger.debug("Doing formatting signs after=" + output + " ");
+        return output;
     }
 
     /**

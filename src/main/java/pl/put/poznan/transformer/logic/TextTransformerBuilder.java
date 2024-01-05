@@ -80,6 +80,7 @@ public class TextTransformerBuilder {
                     logger.info("Deleting Duplicated words");
                     textTransformer = new DeleteDuplicatesDecorator(textTransformer);
                 case "latex":
+                    logger.info("Add format text to latex");
                     textTransformer = new FormatSignsToLatexDecorator(textTransformer);
                     break;
                 case "fullword":
