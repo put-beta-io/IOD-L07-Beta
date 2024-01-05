@@ -79,6 +79,8 @@ public class TextTransformerBuilder {
                 case "duplicates":
                     logger.info("Deleting Duplicated words");
                     textTransformer = new DeleteDuplicatesDecorator(textTransformer);
+                case "latex":
+                    textTransformer = new FormatSignsToLatexDecorator(textTransformer);
                     break;
             }
         }
