@@ -5,21 +5,43 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/**
+ * Class for make signs from normal text into latex format signs..
+ * It extends BasicTextTransformer and implements TextTransformer.
+ */
 public class FormatSignsToLatexDecorator extends BasicTextTransformer {
     private final TextTransformer transformer;
     private final ArrayList<String> normalSign = new ArrayList<>();
     private final ArrayList<String> latexSign = new ArrayList<>();
 
+    /**
+     * Constructor for FormatSignsToLatexDecorator
+     * This constructor load file with signs and their latex format.
+     *
+     * @param transformer Text transformer object to be decorated.
+     */
     public FormatSignsToLatexDecorator(TextTransformer transformer) {
         readFile(normalSign, latexSign);
         this.transformer = transformer;
     }
 
+    /**
+     * Method for transforming text.
+     *
+     * @param text Text to be transformed
+     * @return Text after changes with signs in latex format.
+     */
     @Override
     public String transform(String text) {
         return formatToLatex(transformer.transform(text));
     }
 
+    /**
+     * Function that read normal signs and their latex format version.
+     *
+     * @param normalSign Array with normal signs loaded from file.
+     * @param latexSign  Array with latex format signs loaded from file
+     */
     public void readFile(ArrayList<String> normalSign, ArrayList<String> latexSign) {
         String[] wordsArray;
         try {
@@ -37,6 +59,12 @@ public class FormatSignsToLatexDecorator extends BasicTextTransformer {
         }
     }
 
+    /**
+     * Method for changing normal sings in provided text to their versions in latex.
+     *
+     * @param text Text to be transformed.
+     * @return Text after changes, signs will be written in latex format.
+     */
     public String formatToLatex(String text) {
         String[] splitedText = text.split(" ");
         ArrayList<String> outputText = new ArrayList<>();
