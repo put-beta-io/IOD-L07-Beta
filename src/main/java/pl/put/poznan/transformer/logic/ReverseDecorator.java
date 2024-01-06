@@ -15,9 +15,7 @@ public class ReverseDecorator extends BasicTextTransformer {
     private static final Logger logger = LoggerFactory.getLogger(ReverseDecorator.class);
 
     /**
-     * Constructor for Abbreviation.
-     * This constructor load file with abbreviations and meaning.
-     *
+     * Constructor for ReverseDecorator.
      * @param wrappedTransformer Text transformer object to be decorated.
      */
     public ReverseDecorator(TextTransformer wrappedTransformer) {
