@@ -76,6 +76,10 @@ public class TextTransformerBuilder {
                     logger.info("Reverse transformation");
                     textTransformer = new ReverseDecorator(textTransformer);
                     break;
+                case "duplicates":
+                    logger.info("Deleting Duplicated words");
+                    textTransformer = new DeleteDuplicatesDecorator(textTransformer);
+                    break;
             }
         }
         return textTransformer;
