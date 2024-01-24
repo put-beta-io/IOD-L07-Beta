@@ -1,0 +1,77 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" lang="eng">
+<head>
+    <title>Hello world</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+</head>
+<body class="bg-light">
+<div class="container-fluid d-flex justify-content-center align-items-center vh-100">
+    <div style="min-width: 60%; min-height: 75%" class="card p-4">
+        <h2 class="text-center mb-4">Transform Text</h2>
+        <form method="post" action="/">
+            <div class="mb-3">
+                <label for="text" class="form-label">Text to transform</label>
+                <textarea class="form-control" name="text" id="text" required></textarea>
+            </div>
+            <div class="mb-3">
+                <label for="transformSelector" class="form-label">Select Transform</label>
+                <select class="form-select" id="transformSelector">
+                    <option value="" selected>Please select a transform:</option>
+                    <option value="upper">Uppercase</option>
+                    <option value="lower">Lowercase</option>
+                    <option value="capitalize">Capitalize</option>
+                    <option value="abbreviate">Abbreviate</option>
+                    <option value="numbers">Numbers to text</option>
+                    <option value="reverse">Reverse</option>
+                    <option value="duplicates">Remove duplicates</option>
+                    <option value="fullword">Abbreviations to full form</option>
+                    <option value="latex">Signs to latex</option>
+                </select>
+                <br>
+                <button type="button" class="btn btn-success" onclick="addTransform()">Add Transform</button>
+            </div>
+            <div class="mb-3">
+                <label for="transforms" class="form-label">Transforms</label>
+                <input type="text" class="form-control" name="transforms" id="transforms" required>
+            </div>
+            <div class="mb-3">
+                <button type="submit" class="btn btn-primary">Submit</button>
+                <button type="reset" class="btn btn-secondary">Reset</button>
+            </div>
+        </form>
+        <div th:if="${txt != ''}" class="mb-3">
+            <div class="form-label">Transformed text</div>
+            <div id="transformed-text" class="form-control" th:text="${txt}" style="min-height: 40px; max-height: 90%"></div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // After click on reset button, clear the transformed text
+    document.querySelector('button[type="reset"]').addEventListener('click', function () {
+        document.querySelector('#transformed-text').innerHTML = '';
+    });
+
+    function addTransform() {
+        var transformSelector = document.getElementById('transformSelector');
+        var transformsInput = document.getElementById('transforms');
+
+        // Get the selected transform from the dropdown
+        var selectedTransform = transformSelector.options[transformSelector.selectedIndex].value;
+
+        // Add the selected transform to the transforms input, separated by a comma
+        if (selectedTransform !== '') {
+            transformsInput.value += (transformsInput.value.length > 0 ? ',' : '') + selectedTransform;
+        }
+    }
+</script>
+
+</body>
+
+<style>
+
+</style>
+</html>
+
+
