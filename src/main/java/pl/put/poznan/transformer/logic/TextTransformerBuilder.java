@@ -50,11 +50,12 @@ public class TextTransformerBuilder {
      */
     public TextTransformer getTransformer() {
         TextTransformer textTransformer = new TransformerDecorator(new BasicTextTransformer());
+        Logger logger = LoggerFactory.getLogger(UppercaseDecorator.class);
         for (var transform : transformations) {
             switch (transform) {
                 case "upper":
                     logger.info("Upper transformation");
-                    textTransformer = new UppercaseDecorator(textTransformer);
+                    textTransformer = new UppercaseDecorator(textTransformer, logger);
                     break;
                 case "lower":
                     logger.info("Lower transformation");

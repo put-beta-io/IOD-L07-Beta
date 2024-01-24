@@ -1,9 +1,16 @@
 package pl.put.poznan.transformer.logic;
 
+import org.apache.juli.logging.Log;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.slf4j.Logger;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.when;
 
 class UppercaseDecoratorTest {
     private TextTransformer transformer;
@@ -41,5 +48,15 @@ class UppercaseDecoratorTest {
         String got = transformer.transform("");
 
         assertEquals("", got);
+    }
+
+    @Test
+    void testDecorateUppercaseAllLowerLoggerMockito() {
+        Logger logger = Mockito.mock(Logger.class);
+        TextTransformer t = new UppercaseDecorator(new BasicTextTransformer(), logger);
+
+        String got = t.transform("cheetah");
+
+        Mockito.verify(logger, times(2)).debug(anyString());
     }
 }
