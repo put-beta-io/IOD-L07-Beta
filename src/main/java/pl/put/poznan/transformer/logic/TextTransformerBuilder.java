@@ -80,7 +80,11 @@ public class TextTransformerBuilder {
                     logger.info("Deleting Duplicated words");
                     textTransformer = new DeleteDuplicatesDecorator(textTransformer);
                     break;
+                case "fullword":
+                    textTransformer = new AbbreviationToWordDecorator(textTransformer);
+                    break;
             }
+
         }
         return textTransformer;
     }
