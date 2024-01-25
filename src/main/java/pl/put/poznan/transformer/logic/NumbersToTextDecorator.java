@@ -17,7 +17,7 @@ public class NumbersToTextDecorator extends BasicTextTransformer {
     private final TextTransformer transformer;
     private final ArrayList<String> numbers = new ArrayList<>();
     private final ArrayList<String> textNumbers = new ArrayList<>();
-    private static final Logger logger = LoggerFactory.getLogger(NumbersToTextDecorator.class);
+    private final Logger logger;
 
     /**
      * Constructor for changing numbers to text.
@@ -25,7 +25,8 @@ public class NumbersToTextDecorator extends BasicTextTransformer {
      *
      * @param wrappedTransformer Text transformer object to be decorated.
      */
-    public NumbersToTextDecorator(TextTransformer wrappedTransformer) {
+    public NumbersToTextDecorator(TextTransformer wrappedTransformer, Logger l) {
+        logger = l;
         readFile(numbers, textNumbers);
         this.transformer = wrappedTransformer;
     }

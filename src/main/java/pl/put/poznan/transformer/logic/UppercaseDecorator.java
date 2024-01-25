@@ -9,25 +9,29 @@ import org.slf4j.Logger;
  */
 public class UppercaseDecorator extends BasicTextTransformer {
     private final TextTransformer transformer;
-    private static final Logger logger = LoggerFactory.getLogger(UppercaseDecorator.class);
+    private final Logger logger;
+
     /**
      * Constructor for UppercaseDecorator.
+     *
      * @param wrappedTransformer TextTransformer object to be decorated.
      */
-    public UppercaseDecorator(TextTransformer wrappedTransformer) {
+    public UppercaseDecorator(TextTransformer wrappedTransformer, Logger l) {
         transformer = wrappedTransformer;
+        logger = l;
     }
 
     /**
      * Method for transforming text.
+     *
      * @param text Text to be transformed
      * @return Text converted to uppercase
      */
     @Override
     public String transform(String text) {
-        logger.debug("Doing uppercase before="+text);
+        logger.debug("Doing uppercase before=" + text);
         String output = transformer.transform(text).toUpperCase();
-        logger.debug("Doing uppercase after="+text);
+        logger.debug("Doing uppercase after=" + text);
         return output;
     }
 }

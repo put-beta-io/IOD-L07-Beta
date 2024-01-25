@@ -2,8 +2,12 @@ package pl.put.poznan.transformer.logic;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
+import org.slf4j.Logger;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.times;
 
 class LowercaseDecoratorTest {
     private TextTransformer transformer;
@@ -41,5 +45,15 @@ class LowercaseDecoratorTest {
         String got = transformer.transform("");
 
         assertEquals("", got);
+    }
+
+    @Test
+    void testDecorateLowercaseLoggerMockito() {
+        Logger logger = Mockito.mock(Logger.class);
+        TextTransformer t = new LowercaseDecorator(new BasicTextTransformer(), logger);
+
+        String got = t.transform("NA PRZYKLAD");
+
+        Mockito.verify(logger, times(2)).debug(anyString());
     }
 }

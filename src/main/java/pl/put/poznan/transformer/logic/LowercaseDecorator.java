@@ -9,14 +9,15 @@ import org.slf4j.LoggerFactory;
  */
 public class LowercaseDecorator extends BasicTextTransformer {
     private final TextTransformer transformer;
-    private static final Logger logger = LoggerFactory.getLogger(LowercaseDecorator.class);
+    private final Logger logger;
 
     /**
      * Constructor for LowercaseDecorator
      *
      * @param wrappedTransformer Transformer to be wrapped
      */
-    public LowercaseDecorator(TextTransformer wrappedTransformer) {
+    public LowercaseDecorator(TextTransformer wrappedTransformer, Logger l) {
+        logger = l;
         transformer = wrappedTransformer;
     }
 

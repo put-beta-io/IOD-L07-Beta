@@ -12,14 +12,15 @@ import java.util.ArrayList;
 public class DeleteDuplicatesDecorator extends BasicTextTransformer {
 
     private final TextTransformer transformer;
-    private static final Logger logger = LoggerFactory.getLogger(DeleteDuplicatesDecorator.class);
+    private final Logger logger;
 
     /**
      * Constructor for DeleteDuplicatesDecorator.
      *
      * @param wrappedTransformer Text transformer object to be decorated.
      */
-    public DeleteDuplicatesDecorator(TextTransformer wrappedTransformer) {
+    public DeleteDuplicatesDecorator(TextTransformer wrappedTransformer, Logger l) {
+        logger = l;
         transformer = wrappedTransformer;
     }
 
@@ -31,7 +32,10 @@ public class DeleteDuplicatesDecorator extends BasicTextTransformer {
      */
     @Override
     public String transform(String text) {
-        return deleteDuplicates(transformer.transform(text));
+        logger.debug("Delete duplicates before=" + text);
+        String transformed = deleteDuplicates(transformer.transform(text));
+        logger.debug("Delete duplicates after=" + transformed);
+        return transformed;
     }
 
     /**

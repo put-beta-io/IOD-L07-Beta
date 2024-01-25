@@ -2,8 +2,12 @@ package pl.put.poznan.transformer.logic;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
+import org.slf4j.Logger;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.times;
 
 class NumbersToTextDecoratorTest {
     private TextTransformer transformer;
@@ -68,5 +72,15 @@ class NumbersToTextDecoratorTest {
         String got = transformer.transform("Pies burek waga 21,37 jest teraz, pusty 0 i niepełny 2137");
         String expect = "Pies burek waga dwadzieścia jeden i trzydzieści siedem setnych jest teraz, pusty zero i niepełny dwa tysiące sto trzydzieści siedem";
         assertEquals(expect, got);
+    }
+
+    @Test
+    void testDecorateNumbersToTextLoggerMockito() {
+        Logger logger = Mockito.mock(Logger.class);
+        TextTransformer t = new NumbersToTextDecorator(new BasicTextTransformer(), logger);
+
+        String got = t.transform("2137");
+
+        Mockito.verify(logger, times(2)).debug(anyString());
     }
 }

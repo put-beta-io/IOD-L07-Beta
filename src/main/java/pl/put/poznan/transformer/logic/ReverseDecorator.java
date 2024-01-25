@@ -12,13 +12,15 @@ import java.util.ArrayList;
 public class ReverseDecorator extends BasicTextTransformer {
 
     private final TextTransformer transformer;
-    private static final Logger logger = LoggerFactory.getLogger(ReverseDecorator.class);
+    private final Logger logger;
 
     /**
      * Constructor for ReverseDecorator.
+     *
      * @param wrappedTransformer Text transformer object to be decorated.
      */
-    public ReverseDecorator(TextTransformer wrappedTransformer) {
+    public ReverseDecorator(TextTransformer wrappedTransformer, Logger l) {
+        logger = l;
         transformer = wrappedTransformer;
     }
 
@@ -39,7 +41,7 @@ public class ReverseDecorator extends BasicTextTransformer {
      * @param text Text to be transformed
      * @return Text reversed with uppercase letters positions left unchanged
      */
-    static public String reverse(String text) {
+    public String reverse(String text) {
         logger.debug("Doing reverse before=" + text);
         var indices = new ArrayList<Integer>();
         for (int i = 0; i < text.length(); i++) {
