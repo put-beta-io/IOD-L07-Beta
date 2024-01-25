@@ -12,14 +12,15 @@ import java.util.List;
  */
 public class CapitalizeDecorator extends BasicTextTransformer {
     private final TextTransformer transformer;
-    private static final Logger logger = LoggerFactory.getLogger(CapitalizeDecorator.class);
+    private final Logger logger;
 
     /**
      * Constructor for CapitalizeDecorator.
      *
      * @param wrappedTransformer TextTransformer object to be decorated.
      */
-    public CapitalizeDecorator(TextTransformer wrappedTransformer) {
+    public CapitalizeDecorator(TextTransformer wrappedTransformer, Logger l) {
+        logger = l;
         transformer = wrappedTransformer;
     }
 

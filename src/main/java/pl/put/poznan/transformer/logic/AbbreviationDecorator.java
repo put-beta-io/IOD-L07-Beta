@@ -16,7 +16,7 @@ public class AbbreviationDecorator extends BasicTextTransformer {
     private final TextTransformer transformer;
     private final ArrayList<String> abbreviations = new ArrayList<>();
     private final ArrayList<String> fullWords = new ArrayList<>();
-    private static final Logger logger = LoggerFactory.getLogger(AbbreviationDecorator.class);
+    private final Logger logger;
 
     /**
      * Constructor for Abbreviation.
@@ -24,7 +24,8 @@ public class AbbreviationDecorator extends BasicTextTransformer {
      *
      * @param wrappedTransformer Text transformer object to be decorated.
      */
-    public AbbreviationDecorator(TextTransformer wrappedTransformer) {
+    public AbbreviationDecorator(TextTransformer wrappedTransformer, Logger l) {
+        logger = l;
         readFile(abbreviations, fullWords);
         this.transformer = wrappedTransformer;
     }

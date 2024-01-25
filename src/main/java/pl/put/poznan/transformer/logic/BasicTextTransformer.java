@@ -8,6 +8,7 @@ public class BasicTextTransformer implements TextTransformer {
     /**
      * Method for transforming text
      * BasicTextTransformer does not transform text in any way, so it returns the same text
+     *
      * @param text Text to be transformed
      * @return Transformed text
      */

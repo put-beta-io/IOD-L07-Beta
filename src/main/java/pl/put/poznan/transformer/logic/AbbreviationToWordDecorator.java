@@ -1,7 +1,6 @@
 package pl.put.poznan.transformer.logic;
 
 import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -16,7 +15,7 @@ public class AbbreviationToWordDecorator extends BasicTextTransformer {
     private final TextTransformer transformer;
     private final ArrayList<String> abbreviations = new ArrayList<>();
     private final ArrayList<String> fullWords = new ArrayList<>();
-    private static final Logger logger = LoggerFactory.getLogger(AbbreviationToWordDecorator.class);
+    private final Logger logger;
 
     /**
      * Constructor for AbbreviationToWordDecorator.
@@ -24,7 +23,8 @@ public class AbbreviationToWordDecorator extends BasicTextTransformer {
      *
      * @param wrappedTransformer Text transformer object to be decorated.
      */
-    public AbbreviationToWordDecorator(TextTransformer wrappedTransformer) {
+    public AbbreviationToWordDecorator(TextTransformer wrappedTransformer, Logger l) {
+        logger = l;
         readFile(abbreviations, fullWords);
         this.transformer = wrappedTransformer;
     }

@@ -29,6 +29,7 @@ public class TextTransformerBuilder {
 
     /**
      * Constructor with a list of transformations to be added.
+     *
      * @param transformations List of transformations to be added.
      */
     public TextTransformerBuilder(ArrayList<String> transformations) {
@@ -37,6 +38,7 @@ public class TextTransformerBuilder {
 
     /**
      * Adds a transformation to the list of transformations to be added.
+     *
      * @param transformationCommand Transformation to be added.
      */
     public void addTransformation(String transformationCommand) {
@@ -46,6 +48,7 @@ public class TextTransformerBuilder {
     /**
      * Returns a TextTransformer object with all transformations added.
      * All possible transformations should be added to switch-case statement.
+     *
      * @return TextTransformer object with all transformations added.
      */
     public TextTransformer getTransformer() {
@@ -59,34 +62,35 @@ public class TextTransformerBuilder {
                     break;
                 case "lower":
                     logger.info("Lower transformation");
-                    textTransformer = new LowercaseDecorator(textTransformer);
+                    textTransformer = new LowercaseDecorator(textTransformer, logger);
                     break;
                 case "capitalize":
                     logger.info("Capitalize transformation");
-                    textTransformer = new CapitalizeDecorator(textTransformer);
+                    textTransformer = new CapitalizeDecorator(textTransformer, logger);
                     break;
                 case "abbreviate":
                     logger.info("Abbreviate transformation");
-                    textTransformer = new AbbreviationDecorator(textTransformer);
+                    textTransformer = new AbbreviationDecorator(textTransformer, logger);
                     break;
                 case "numbers":
                     logger.info("Numbers to text transformation");
-                    textTransformer = new NumbersToTextDecorator(textTransformer);
+                    textTransformer = new NumbersToTextDecorator(textTransformer, logger);
                     break;
                 case "reverse":
                     logger.info("Reverse transformation");
-                    textTransformer = new ReverseDecorator(textTransformer);
+                    textTransformer = new ReverseDecorator(textTransformer, logger);
                     break;
                 case "duplicates":
                     logger.info("Deleting Duplicated words");
-                    textTransformer = new DeleteDuplicatesDecorator(textTransformer);
+                    textTransformer = new DeleteDuplicatesDecorator(textTransformer, logger);
                     break;
                 case "latex":
                     logger.info("Add format text to latex");
-                    textTransformer = new FormatSignsToLatexDecorator(textTransformer);
+                    textTransformer = new FormatSignsToLatexDecorator(textTransformer, logger);
                     break;
                 case "fullword":
-                    textTransformer = new AbbreviationToWordDecorator(textTransformer);
+                    logger.info("Change abbreviations to fullwords");
+                    textTransformer = new AbbreviationToWordDecorator(textTransformer, logger);
                     break;
             }
 

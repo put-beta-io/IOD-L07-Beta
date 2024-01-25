@@ -9,6 +9,7 @@ public class TransformerDecorator implements TextTransformer {
 
     /**
      * Constructor for TransformerDecorator
+     *
      * @param wrappedTransformer Transformer to be wrapped
      */
     public TransformerDecorator(TextTransformer wrappedTransformer) {
@@ -17,6 +18,7 @@ public class TransformerDecorator implements TextTransformer {
 
     /**
      * Method for transforming text
+     *
      * @param text Text to be transformed
      * @return Transformed text
      */
